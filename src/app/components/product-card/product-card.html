@@ -1,0 +1,35 @@
+<div class="product-card">
+  <img [src]="product.imageUrl" [alt]="product.title" class="product-image">
+
+  <div class="product-info">
+    <a href="#" class="product-title">{{ product.title }}</a>
+    <p class="my-2">{{ product.description }}</p>
+
+    <button matButton="filled" (click)="onAddToCart()" [disabled]="product.stock === 0" class="my-2">
+      <mat-icon>add_shopping_cart</mat-icon> Carrinho
+    </button>
+
+    <div class="product-details">
+      <p class="detail">
+        <span class="label">💰 Preço:</span>
+        <span class="value original-price">{{ product.price | currency:'BRL' }}</span>
+      </p>
+
+      @if(product.discountPercentage > 0) {
+        <p class="detail">
+          <span class="label">📉 Desconto:</span>
+          <span class="value">{{ product.discountPercentage }}%</span>
+        </p>
+        <p class="detail final-price">
+          <span class="label">Preço Final:</span>
+          <span class="value">R$ {{ discountedPrice | number:'1.2-2':'pt' }}</span>
+        </p>
+    }
+
+      <p class="detail" [class.out-of-stock]="product.stock === 0">
+        <span class="label">📦 Estoque:</span>
+        <span class="value">{{ product.stock }} unidades</span>
+      </p>
+    </div>
+  </div>
+</div>

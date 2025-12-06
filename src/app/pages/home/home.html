@@ -1,0 +1,35 @@
+<div class="bg-[#282A2D] py-15 rounded-md">
+  <div>
+    <h1 class="text-5xl font-medium">Bem-vindo à Loja Minsait</h1>
+    <p class="py-2 text-xl text-[#888A8D]">Explore a nossa loja virtual e descubra uma ampla variedade de produtos de
+      alta qualidade.</p>
+    <div class="flex gap-2 justify-center">
+      <button matButton="filled">
+        <fa-icon [icon]="faPlus"/>
+        Adicionar Produto
+      </button>
+      <button
+              class="
+    border border-white/20
+    text-white/60
+    rounded-full
+    px-5 py-2
+    hover:border-white/40
+    hover:text-white
+    transition
+    w-40
+  ">Saiba Mais
+      </button>
+    </div>
+  </div>
+  
+</div>
+<div class="grid grid-cols-3 gap-4">
+  @for (product of products; track product.id) {
+    <app-product-card [product]="product"></app-product-card>
+  } 
+  
+  @empty {
+    <p>Nenhum produto encontrado.</p>
+  }
+</div>

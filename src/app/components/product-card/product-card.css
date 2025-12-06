@@ -1,0 +1,105 @@
+.product-card {
+  /* Fundo do card em tema escuro, ligeiramente mais claro que o fundo da página */
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s;
+  color: #f0f0f0; /* Texto claro */
+  width: 400px;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 100%;
+  height: 250px;
+  object-fit: fill;
+  margin-bottom: 10px;
+}
+
+.product-info {
+  text-align: left;
+  
+}
+
+.product-title {
+  font-size: 1.3em;
+  text-decoration: underline;
+  color:#007bff;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.product-description {
+  font-size: 0.9em;
+  color: #aaaaaa;
+  margin-bottom: 10px;
+}
+
+.product-grid {
+  
+}
+
+.btn-cart {
+  /* Botão azul do protótipo */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-bottom: 15px;
+  transition: background-color 0.3s;
+}
+
+.btn-cart:hover:not([disabled]) {
+  background-color: #0056b3;
+}
+
+.btn-cart[disabled] {
+  background-color: #4a4a4a;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.product-details {
+  border-top: 1px solid #333;
+  padding-top: 10px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.label {
+  font-weight: bold;
+  color: #aaaaaa;
+}
+
+.value {
+  color: #f0f0f0;
+}
+
+.original-price {
+  text-decoration: line-through; /* Para o preço cheio */
+  color: #777;
+}
+
+.final-price .value {
+  color: #28a745; /* Cor verde para o preço final */
+  font-weight: bold;
+}
+
+/* Estilo para produto esgotado (visível nos fones de ouvido no protótipo) */
+.out-of-stock .value {
+  color: #dc3545; /* Cor vermelha para estoque zero */
+  font-weight: bold;
+}
