@@ -3,7 +3,7 @@ import {MatButton} from '@angular/material/button';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
-import { Product } from '../../components/models/product.model';
+import { Product } from '../../models/product.model';
 import { ProductCard } from "../../components/product-card/product-card";
 
 @Component({
