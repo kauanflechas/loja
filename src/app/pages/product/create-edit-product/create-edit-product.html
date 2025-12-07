@@ -1,1 +1,51 @@
-<p>create-edit-product works!</p>
+<div class="bg-[#282A2D] py-15 rounded-md">
+    <form [formGroup]="productForm" class="flex flex-col justify-items-center items-center">
+        <div>
+            <mat-form-field>
+                <mat-label>Nome do produto</mat-label>
+                <input matInput id="nome" type="text" formControlName="nome">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <input matInput formControlName="descricao">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Preço</mat-label>
+                <input matInput formControlName="preco">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>SKU</mat-label>
+                <input matInput formControlName="sku">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Categoria</mat-label>
+                <input matInput formControlName="categoriaId">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Quantidade do estoque</mat-label>
+                <input matInput formControlName="quantidade">
+            </mat-form-field>
+        </div>
+        <div class="flex gap-2 justify-center">
+            <button matButton="filled" (click)="save()">
+                Salvar
+            </button>
+            <button matButton="filled" (click)="back()">
+                Voltar
+            </button>
+            <button matButton="filled" (click)="back()">
+                Alterar
+            </button>
+        </div>
+    </form>
+</div>

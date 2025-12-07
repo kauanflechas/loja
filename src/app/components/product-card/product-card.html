@@ -1,34 +1,34 @@
 <div class="product-card">
-  <img [src]="product.imageUrl" [alt]="product.title" class="product-image">
+  <!-- <img [src]="product.imageUrl" [alt]="product.title" class="product-image"> -->
 
   <div class="product-info">
-    <a href="#" class="product-title">{{ product.title }}</a>
-    <p class="my-2">{{ product.description }}</p>
+    <a href="#" class="product-title">{{ product.nome }}</a>
+    <p class="my-2">{{ product.descricao }}</p>
 
-    <button matButton="filled" (click)="onAddToCart()" [disabled]="product.stock === 0" class="my-2">
+    <button matButton="filled" (click)="onAddToCart()" [disabled]="product.quantidade === 0" class="my-2">
       <mat-icon>add_shopping_cart</mat-icon> Carrinho
     </button>
 
     <div class="product-details">
       <p class="detail">
         <span class="label">💰 Preço:</span>
-        <span class="value original-price">{{ product.price | currency:'BRL' }}</span>
+        <span class="value original-price">{{ product.preco | currency:'BRL' }}</span>
       </p>
 
-      @if(product.discountPercentage > 0) {
-        <p class="detail">
-          <span class="label">📉 Desconto:</span>
-          <span class="value">{{ product.discountPercentage }}%</span>
-        </p>
-        <p class="detail final-price">
-          <span class="label">Preço Final:</span>
-          <span class="value">R$ {{ discountedPrice | number:'1.2-2':'pt' }}</span>
-        </p>
-    }
+      @if(product.desconto && product.desconto> 0) {
+      <p class="detail">
+        <span class="label">📉 Desconto:</span>
+        <span class="value">{{ product.desconto }}%</span>
+      </p>
+      <p class="detail final-price">
+        <span class="label">Preço Final:</span>
+        <span class="value">R$ {{ discountedPrice | number:'1.2-2':'pt' }}</span>
+      </p>
+      }
 
-      <p class="detail" [class.out-of-stock]="product.stock === 0">
+      <p class="detail" [class.out-of-stock]="product.quantidade === 0">
         <span class="label">📦 Estoque:</span>
-        <span class="value">{{ product.stock }} unidades</span>
+        <span class="value">{{ product.quantidade }} unidades</span>
       </p>
     </div>
   </div>

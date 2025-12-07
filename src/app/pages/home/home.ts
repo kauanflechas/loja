@@ -1,63 +1,41 @@
-import { Component } from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faFacebookF} from '@fortawesome/free-brands-svg-icons';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../../models/product.model';
 import { ProductCard } from "../../components/product-card/product-card";
+import { Router } from '@angular/router';
+import { ProductService } from '../../service/product.service';
+import { ɵInternalFormsSharedModule } from "@angular/forms";
+
 
 @Component({
   selector: 'app-home',
   imports: [
     MatButton,
     FaIconComponent,
-    ProductCard
-],
+    ProductCard,
+    ɵInternalFormsSharedModule,
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home implements OnInit {
+
+  constructor(private router: Router, private service: ProductService) { }
 
   protected readonly faFacebookF = faFacebookF;
   protected readonly faPlus = faPlus;
-  public products:Product[] = [{
-    id: 1,
-    title: "Blusa Azul",
-    description: "Blusa sem manga, na cor azul, 90% algodão e 10% charme",
-    price: 29.99,
-    discountPercentage: 10,
-    stock: 5,
-    imageUrl: "https://m.magazineluiza.com.br/a-static/420x420/regata-machao-malha-fria-fenomenal-sem-elasticidade/fabricafenomenal/28114-28105/4940055aa87453e11763d933c1de0b48.jpeg"
+  public products = signal<Product[]>([]);
 
-  },
-  {
-    id: 1,
-    title: "Blusa Azul",
-    description: "Blusa manda curta na cor azul",
-    price: 59.90,
-    discountPercentage: 20,
-    stock: 5,
-    imageUrl: "https://m.magazineluiza.com.br/a-static/420x420/regata-machao-malha-fria-fenomenal-sem-elasticidade/fabricafenomenal/28114-28105/4940055aa87453e11763d933c1de0b48.jpeg"
-
-  },
-{
-    id: 1,
-    title: "Blusa Verde",
-    description: "Blusa manda curta na cor verde",
-    price: 59.90,
-    discountPercentage: 20,
-    stock: 5,
-    imageUrl: "https://m.magazineluiza.com.br/a-static/420x420/regata-machao-malha-fria-fenomenal-sem-elasticidade/fabricafenomenal/28114-28105/4940055aa87453e11763d933c1de0b48.jpeg"
-
-  },
-{
-    id: 1,
-    title: "Blusa Rosa",
-    description: "Blusa manda curta na cor rosa",
-    price: 59.90,
-    discountPercentage: 20,
-    stock: 5,
-    imageUrl: "https://m.magazineluiza.com.br/a-static/420x420/regata-machao-malha-fria-fenomenal-sem-elasticidade/fabricafenomenal/28114-28105/4940055aa87453e11763d933c1de0b48.jpeg"
-
-  }];
+  toCreateProduct() {
+    this.router.navigate(['/product/create-edit']);
+  }
+  ngOnInit(): void {
+    this.service.getProducts().subscribe((products) => {
+      this.products.set(products);
+    }
+    );
+  }
 }

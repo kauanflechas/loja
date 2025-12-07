@@ -4,12 +4,11 @@
     <p class="py-2 text-xl text-[#888A8D]">Explore a nossa loja virtual e descubra uma ampla variedade de produtos de
       alta qualidade.</p>
     <div class="flex gap-2 justify-center">
-      <button matButton="filled">
-        <fa-icon [icon]="faPlus"/>
+      <button matButton="filled" (click)="toCreateProduct()">
+        <fa-icon [icon]="faPlus" />
         Adicionar Produto
       </button>
-      <button
-              class="
+      <button class="
     border border-white/20
     text-white/60
     rounded-full
@@ -22,14 +21,14 @@
       </button>
     </div>
   </div>
-  
+
 </div>
 <div class="grid grid-cols-3 gap-4">
-  @for (product of products; track product.id) {
-    <app-product-card [product]="product"></app-product-card>
-  } 
-  
+  @for (product of products(); track product.id) {
+  <app-product-card [product]="product"></app-product-card>
+  }
+
   @empty {
-    <p>Nenhum produto encontrado.</p>
+  <p>Nenhum produto encontrado.</p>
   }
 </div>

@@ -16,16 +16,11 @@ export class ProductCard {
 
   // Método para calcular o preço final com desconto
   get discountedPrice(): number {
-    return this.product.price * (1 - this.product.discountPercentage / 100);
+    return this.product.preco * (1 - (this.product.desconto ?? 0) / 100);
   }
 
   onAddToCart(): void {
-    if (this.product.stock > 0) {
-      console.log(`Produto ${this.product.title} adicionado ao carrinho!`);
-      // Lógica real de adicionar ao carrinho viria aqui.
-    } else {
-      alert('Produto esgotado!');
-    }
 
-}
+
+  }
 }
