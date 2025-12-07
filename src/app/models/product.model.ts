@@ -5,7 +5,8 @@ export interface Product {
   preco: number;
   desconto?: number;
   quantidade: number;
-  imagemUrl?: string;
+  imagem?: string;
+  codigoBarras: string;
   sku: string;
   categoriaId: number;
   categoriaNome?: string;
@@ -19,7 +20,9 @@ export interface ProdutoRequest {
   sku: string;
   categoriaId: number;
   ativo: boolean;
-
+  quantidade: number | null | undefined;
+  imagem: string;
+  codigoBarras: string;
 }
 
 export interface CreateProduct {

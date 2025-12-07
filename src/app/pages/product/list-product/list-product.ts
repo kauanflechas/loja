@@ -41,7 +41,7 @@ export class ListProduct {
   }
 
   products = signal<Product[]>([]);
-  displayedColumns = ['nome', 'preco', 'acoes'];
+  displayedColumns = ['nome', 'preco', 'codigoBarras', 'acoes', ];
   ngOnInit(): void {
     this.service.getProducts().subscribe(r => this.products.set(r));
   }

@@ -1,51 +1,121 @@
 <div class="bg-[#282A2D] py-15 rounded-md">
-    <form [formGroup]="productForm" class="flex flex-col justify-items-center items-center">
-        <div>
-            <mat-form-field>
-                <mat-label>Nome do produto</mat-label>
-                <input matInput id="nome" type="text" formControlName="nome">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Descrição</mat-label>
-                <input matInput formControlName="descricao">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Preço</mat-label>
-                <input matInput formControlName="preco">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>SKU</mat-label>
-                <input matInput formControlName="sku">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Categoria</mat-label>
-                <input matInput formControlName="categoriaId">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Quantidade do estoque</mat-label>
-                <input matInput formControlName="quantidade">
-            </mat-form-field>
-        </div>
-        <div class="flex gap-2 justify-center">
-            <button matButton="filled" (click)="save()">
-                Salvar
-            </button>
-            <button matButton="filled" (click)="back()">
-                Voltar
-            </button>
-            <button matButton="filled" (click)="back()">
-                Alterar
-            </button>
-        </div>
-    </form>
+  <form [formGroup]="productForm" class="flex flex-col justify-items-center items-center">
+    <div>
+      <mat-form-field>
+        <mat-label>Nome do produto</mat-label>
+        <input matInput id="nome" type="text" formControlName="nome">
+        @if (getErrorMessage('nome')) {
+        <mat-error>
+          {{ getErrorMessage('nome') }}
+        </mat-error>
+        }
+
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="descricao">
+        @if (getErrorMessage('descricao')) {
+        <mat-error>
+          {{ getErrorMessage('descricao') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Preço</mat-label>
+        <input mask="separator.2" thousandSeparator="." decimalMarker="," matInput formControlName="preco">
+        @if (getErrorMessage('preco')) {
+        <mat-error>
+          {{ getErrorMessage('preco') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Código de barras</mat-label>
+        <input matInput formControlName="codigoBarras" type="number">
+        @if (getErrorMessage('codigoBarras')) {
+        <mat-error>
+          {{ getErrorMessage('codigoBarras') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>SKU</mat-label>
+        <input matInput formControlName="sku">
+        @if (getErrorMessage('sku')) {
+        <mat-error>
+          {{ getErrorMessage('sku') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoriaId">
+          @for (categoria of categorias(); track categoria.id) {
+          <mat-option [value]="categoria.id">
+            {{ categoria.nome }}
+          </mat-option>
+          }
+        </mat-select>
+        @if (getErrorMessage('categoriaId')) {
+        <mat-error>
+          {{ getErrorMessage('categoriaId') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Quantidade do estoque</mat-label>
+        <input matInput formControlName="quantidade" type="number">
+        @if (getErrorMessage('quantidade')) {
+        <mat-error>
+          {{ getErrorMessage('quantidade') }}
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
+      <button matButton="filled" color="primary" type="button" (click)="fileInput.click()">
+        <mat-icon>upload</mat-icon>
+        Escolher imagem
+      </button>
+      @if (getErrorMessage('imagem')) {
+      <mat-error>
+        {{ getErrorMessage('imagem') }}
+      </mat-error>
+      }
+      @if (previewBase64()) {
+      <div class="mt-2  flex justify-center items-center">
+        <img [src]="previewBase64()" style="max-width: 200px; max-height: 200px" alt="Foto representativa do produto">
+      </div>
+      }
+    </div>
+    <div class="flex gap-2 justify-center mt-3">
+      @if (!id) {
+      <button matButton="filled" (click)="save()">
+        Salvar
+      </button>
+      }
+      @if (id) {
+      <button matButton="filled" (click)="edit()">
+        Alterar
+      </button>
+      }
+
+      <button matButton="filled" (click)="back()">
+        Voltar
+      </button>
+    </div>
+  </form>
 </div>
