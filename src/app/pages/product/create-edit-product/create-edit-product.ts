@@ -1,10 +1,10 @@
 import { CreateProduct } from './../../../models/product.model';
 import { ProductService } from './../../../service/product.service';
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -14,8 +14,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './create-edit-product.html',
   styleUrl: './create-edit-product.css',
 })
-export class CreateEditProduct {
-  constructor(private router: Router, private productService: ProductService) {
+export class CreateEditProduct implements OnInit {
+  id?: number;
+  constructor(private readonly route: ActivatedRoute, private router: Router, private productService: ProductService) {
 
   }
 
@@ -49,6 +50,24 @@ export class CreateEditProduct {
   }
   edit() {
 
+  }
+
+  ngOnInit() {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id) {
+
+      this.productService.getProductById(this.id).subscribe(r => {
+        this.productForm.setValue({
+          nome: r.nome,
+          descricao: r.descricao,
+          preco: r.preco,
+          sku: r.sku,
+          categoriaId: r.categoriaId,
+          quantidade: r.quantidade
+        });
+      });
+
+    }
   }
 
 }

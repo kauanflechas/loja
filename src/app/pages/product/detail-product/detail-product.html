@@ -1,1 +1,61 @@
-<p>detail-product works!</p>
+<div class="max-w-3xl mx-auto bg-[#2E3033] p-10 rounded-lg shadow-lg text-white space-y-8">
+
+    <!-- Título -->
+    <div>
+        <h2 class="text-4xl font-semibold">Detalhes do Produto</h2>
+    </div>
+
+    <!-- GRID DOS CAMPOS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Nome -->
+        <div class="flex flex-col">
+            <label for="nome" class="text-lg font-medium mb-1">Nome</label>
+            <mat-form-field appearance="outline" class="custom-field">
+                <input id="nome" matInput readonly class="text-white" [value]="product()?.nome">
+            </mat-form-field>
+        </div>
+
+        <!-- Categoria -->
+        <div class="flex flex-col">
+            <label for="categoria" class="text-lg font-medium mb-1">Categoria</label>
+            <mat-form-field appearance="outline" class="custom-field">
+                <input id="categoria" matInput readonly class="text-white" [value]="product()?.categoriaNome">
+            </mat-form-field>
+        </div>
+
+        <!-- Descrição -->
+        <div class="flex flex-col md:col-span-2">
+            <label for="descricao" class="text-lg font-medium mb-1">Descrição</label>
+            <mat-form-field appearance="outline" class="custom-field w-full">
+                <textarea id="descricao" matInput readonly rows="3"
+                    class="text-white">{{ product()?.descricao }}</textarea>
+            </mat-form-field>
+        </div>
+
+        <!-- Preço -->
+        <div class="flex flex-col">
+            <label for="preco" class="text-lg font-medium mb-1">Preço</label>
+            <mat-form-field appearance="outline" class="custom-field">
+                <input id="preco" matInput readonly class="text-white" [value]="product()?.preco | currency:'BRL'">
+            </mat-form-field>
+        </div>
+
+        <!-- SKU -->
+        <div class="flex flex-col">
+            <label for="sku" class="text-lg font-medium mb-1">SKU</label>
+            <mat-form-field appearance="outline" class="custom-field">
+                <input id="sku" matInput readonly class="text-white" [value]="product()?.sku">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <!-- Botões -->
+    <div class="flex justify-end gap-4 pt-4">
+        <button matButton="filled" (click)="back()">
+            Voltar
+        </button>
+    </div>
+
+</div>

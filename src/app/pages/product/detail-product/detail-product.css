@@ -1,0 +1,16 @@
+/* deixar texto do input branco */
+.mdc-text-field--outlined .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline__trailing,
+.mdc-text-field--outlined .mdc-notched-outline__notch {
+  border-color: #bbb !important;
+}
+
+/* bordas mais arredondadas */
+.mat-mdc-text-field-wrapper {
+  border-radius: 12px !important;
+}
+
+/* texto dentro do input */
+.mat-mdc-input-element {
+  color: white !important;
+}

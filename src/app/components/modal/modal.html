@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Excluir Produto</h2>
+
+<mat-dialog-content>
+    Tem certeza que deseja excluir <b>{{ data.nome }}</b>?
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex justify-end gap-2">
+    <button mat-button (click)="cancel()">Cancelar</button>
+    <button mat-raised-button color="warn" (click)="confirm()">Excluir</button>
+</mat-dialog-actions>
