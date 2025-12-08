@@ -1,1 +1,49 @@
-<p>cart works!</p>
+<div class="container">
+
+    @for (item of itens; track item.id) {
+    <mat-card class="item-card">
+        <mat-card-header>
+            <mat-card-title>{{ item.nome }}</mat-card-title>
+            <mat-card-subtitle>SKU: {{ item.sku }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                @if (item.imagem) {
+                <img [src]="item.imagem" class="produto-img" [alt]="item.nome" />
+                }
+
+                <div>
+                    <p>{{ item.descricao }}</p>
+                    <p><strong>Preço:</strong> {{ item.preco | currency:'BRL' }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-button color="warn" (click)="remover(item.id)">
+                Remover
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    }
+
+
+    <!-- Total -->
+    @if (itens.length) {
+    <mat-card class="total-card">
+        <h2>Total: {{ total | currency:'BRL' }}</h2>
+
+        <button mat-raised-button color="primary" (click)="finalizar()">
+            Finalizar Compra
+        </button>
+    </mat-card>
+    }
+
+    @if (!itens.length) {
+    <div class="empty">
+        <p>Seu carrinho está vazio.</p>
+    </div>
+    }
+
+</div>
