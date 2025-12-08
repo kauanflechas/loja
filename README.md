@@ -3,7 +3,7 @@
 ## **Visão Geral**
 
 - **Descrição**: Projeto front-end em Angular para uma loja virtual simples com **CRUD de produtos** e **carrinho de compras**.
-- **Tecnologias**: **Angular 17** (com Signals), **TypeScript**, **Tailwind CSS** (para estilização), Angular Material (componentes), PrimeNG (opcional).
+- **Tecnologias**: **Angular 17** (com Signals), **TypeScript**, **Tailwind CSS** (para estilização), Angular Material (componentes).
 - **Backend esperado**: API REST em `http://localhost:8080/v1/produtos` (Endpoints CRUD para Produtos).
 
 ---
@@ -18,18 +18,8 @@
 | **Componente de Tabela Isolado**       | **A Implementar** | **Prioridade (Recomendação #3):** Criar `app-product-table` para desacoplar a lógica da tabela da listagem principal.                            |
 | **Colunas / Formatação**               | **Implementado**  | Colunas obrigatórias: Nome / Preço / Cód. Barras. Preço formatado com `CurrencyPipe`.                                                            |
 | **Ações (Editar/Excluir)**             | **Implementado**  | Edição navega para rota. Exclusão via modal (`src/app/components/modal/modal.ts`) que chama `ProductService.deleteProduct()` e atualiza a lista. |
-| **Adicionar ao Carrinho na Listagem**  | **Parcial**       | O método `onAddToCart()` em `product-card` existe, mas precisa integrar-se ao novo **`CartService`**.                                            |
-| **Cadastro / Edição (Reactive Forms)** | **Parcial**       | Falta de **validações (Validators)** obrigatórias (Requisito #4: Adicionar `Validators.required`, `Validators.min`, etc.).                       |
-
-### **Módulo de Carrinho de Compras**
-
-| Funcionalidade                            | Status               | Pontos de Atenção / Detalhes                                                                                                             |
-| :---------------------------------------- | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lógica de Estado (CartService)**        | **A Implementar**    | **Prioridade (Recomendação #1):** Criar `src/app/service/cart.service.ts` para gerenciar a lógica do carrinho.                           |
-| **Persistência (LocalStorage)**           | **A Implementar**    | **Prioridade (Recomendação #1):** O `CartService` deve implementar a lógica para **salvar e carregar** o carrinho do **`LocalStorage`**. |
-| **Prevenção de Duplicidade / Quantidade** | **A Implementar**    | O `CartService` deve gerenciar a lógica de incrementar a quantidade de um item existente.                                                |
-| **Página do Carrinho**                    | **Estrutura Pronta** | **Prioridade (Recomendação #5):** `src/app/pages/cart/cart.ts` sem listagem, total ou lógica de remoção de itens.                        |
-| **Header/Menu com Contador**              | **A Implementar**    | O `header.ts` precisa se inscrever no `CartService` (via `signal`/`BehaviorSubject`) para exibir o número de itens.                      |
+| **Adicionar ao Carrinho na Listagem**  | **Implementado**  | O método `onAddToCart()` em `product-card` foi implementado, e integrado ao **`CartService`**.                                                   |
+| **Cadastro / Edição (Reactive Forms)** | **Implementado**  | **Validações (Validators)** obrigatórias (Requisito #4: Adicionados `Validators.required`, `Validators.min`, etc.).                              |
 
 ---
 
@@ -38,12 +28,12 @@
 ### **Arquitetura de Services**
 
 - **`ProductService`**: Implementado e seguindo as boas práticas com chamadas HTTP para o CRUD.
-- **`CartService`**: **Ausente/Prioritário.** Necessária a criação de `src/app/service/cart.service.ts` para isolar toda a lógica de estado do carrinho (adição, remoção, total e persistência).
+- **`CartService`**: **Implementado** Realizada a criação de `src/app/service/cart.service.ts` para isolar toda a lógica de estado do carrinho (adição, remoção, total e persistência).
 
 ### **Boas Práticas e Tipagem**
 
 - **Interface `Product`**: Implementada em `src/app/models/product.model.ts` (Excelente uso de tipagem, evitando `any`).
-- **Padrão de Estado**: Uso de **Angular Signals** já em alguns componentes (bom para Angular 17), mas precisa ser aplicado no **`CartService`** para um gerenciamento de estado reativo e eficiente.
+- **Padrão de Estado**: Uso de **Angular Signals** já em alguns componentes (bom para Angular 17).
 - **Estilização**: Uso de **Tailwind CSS** (confirme a configuração no `angular.json` ou `tailwind.config.js`).
 
 ---
