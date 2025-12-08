@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model'
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatIcon } from "@angular/material/icon";
 import { MatButton } from '@angular/material/button';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -11,15 +12,28 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './product-card.css',
 })
 export class ProductCard {
-  // @Input() permite que o componente pai passe o objeto 'product' para cá.
+
+  constructor(private readonly service: CartService) {
+  }
+
   @Input() product!: Product;
 
-  // Método para calcular o preço final com desconto
+
   get discountedPrice(): number {
     return this.product.preco * (1 - (this.product.desconto ?? 0) / 100);
   }
 
-  onAddToCart(): void {
+  onAddToCart(produto: Product): void {
+
+    produto.preco = this.discountedPrice
+    const ok = this.service.addItem(produto);
+
+    if (!ok) {
+      alert("Este produto já está no carrinho!");
+      return;
+    }
+
+    alert("Produto adicionado ao carrinho!");
 
 
   }

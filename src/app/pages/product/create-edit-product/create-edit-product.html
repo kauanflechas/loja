@@ -26,7 +26,8 @@
     <div>
       <mat-form-field>
         <mat-label>Preço</mat-label>
-        <input mask="separator.2" thousandSeparator="." decimalMarker="," matInput formControlName="preco">
+        <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" matInput
+          formControlName="preco">
         @if (getErrorMessage('preco')) {
         <mat-error>
           {{ getErrorMessage('preco') }}
@@ -37,7 +38,7 @@
     <div>
       <mat-form-field>
         <mat-label>Código de barras</mat-label>
-        <input matInput formControlName="codigoBarras" type="number">
+        <input matInput formControlName="codigoBarras" mask="999999999999999">
         @if (getErrorMessage('codigoBarras')) {
         <mat-error>
           {{ getErrorMessage('codigoBarras') }}
@@ -76,7 +77,7 @@
     <div>
       <mat-form-field>
         <mat-label>Quantidade do estoque</mat-label>
-        <input matInput formControlName="quantidade" type="number">
+        <input matInput formControlName="quantidade" mask="99999">
         @if (getErrorMessage('quantidade')) {
         <mat-error>
           {{ getErrorMessage('quantidade') }}

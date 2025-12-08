@@ -5,7 +5,7 @@
     <a href="#" class="product-title">{{ product.nome }}</a>
     <p class="my-2">{{ product.descricao }}</p>
 
-    <button matButton="filled" (click)="onAddToCart()" [disabled]="product.quantidade === 0" class="my-2">
+    <button matButton="filled" (click)="onAddToCart(product)" [disabled]="product.quantidade === 0" class="my-2">
       <mat-icon>add_shopping_cart</mat-icon> Carrinho
     </button>
 

@@ -1,0 +1,26 @@
+/* Container da tabela */
+.dark-table {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dark-table,
+.dark-table th,
+.dark-table td,
+.dark-table .mat-cell,
+.dark-table .mat-header-cell {
+  color: #ffffff;
+}
+
+.dark-table .icon-view mat-icon {
+  color: #64b5f6 !important;
+}
+
+.dark-table .icon-edit mat-icon {
+  color: #ffb74d !important;
+}
+
+.dark-table .icon-delete mat-icon {
+  color: #ef5350 !important;
+}
