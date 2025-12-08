@@ -1,149 +1,110 @@
-# Loja - Aplicação Angular
+# 🛒 Loja - Aplicação Angular
 
 ## **Visão Geral**
-- **Descrição**: Projeto front-end em Angular para uma loja simples com CRUD de produtos e um carrinho de compras.
-- **Tecnologias**: Angular 21, Angular Material, PrimeNG (opcional), TypeScript.
-- **Backend esperado**: API REST em `http://localhost:8080/v1/produtos` (não fornecida aqui).
 
-## **Requisitos Funcionais (mapeamento)**
-
-- **Módulo de Produtos (CRUD)**
-  - **Listagem**: Implementado — os produtos são carregados da API usando `ProductService.getProducts()`; componente principal: `src/app/pages/product/list-product/list-product.ts`.
-  - **Componente de Tabela isolado**: Parcial/Não implementado — a listagem usa `MatTable` dentro do próprio componente `ListProduct`. Não existe um componente separado que receba os dados via `@Input()` (arquivo a revisar para criar: `src/app/components/`).
-  - **Colunas obrigatórias**: Nome / Preço / Cód. Barras — a tabela define colunas `['nome','preco','acoes']` em `list-product.ts`. Formatação de preço é feita via `CurrencyPipe` no template (ver `list-product.html`).
-  - **Ações (Editar/Excluir)**: Implementado — botão Editar navega para rota de edição; Exclusão abre um modal (`src/app/components/modal/modal.ts`) que chama `ProductService.deleteProduct()` e, ao fechar, a lista é atualizada.
-  - **Adicionar ao Carrinho na listagem**: Parcial — existe um componente `app-product-card` (`src/app/components/product-card/product-card.ts`) com um método `onAddToCart()` definido, porém sem implementação.
-  - **Cadastro / Edição (Reactive Forms)**: Parcial — o formulário de criação/edição usa `FormGroup` e `FormControl` em `src/app/pages/product/create-edit-product/create-edit-product.ts`, mas não há validações (`Validators`) aplicadas nos controles (validação obrigatória/tipo numérico ainda não implementada).
-  - **Exclusão via API e atualização visual**: Implementado — `Modal.confirm()` usa `ProductService.deleteProduct()` e `ListProduct` recarrega a lista ao fechar o modal.
-
-- **Módulo de Carrinho de Compras**
-  - **Lógica de Estado (CartService)**: Não implementado — não foi encontrado um `CartService` em `src/app/service/`. O componente de cartão (`product-card`) tem um `onAddToCart()` vazio.
-  - **Persistência (LocalStorage)**: Não implementado — atualmente não há lógica para salvar/ler carrinho no `LocalStorage`.
-  - **Prevenção de duplicidade / controle de quantidade / preço negativo**: Não implementado.
-  - **Página do Carrinho**: Estrutura presente: `src/app/pages/cart/cart.ts`, porém sem implementação da listagem, total ou remoção de itens.
-  - **Header/Menu com contador de itens**: Header existe (`src/app/components/header/header.ts`) mas não exibe contador do carrinho — falta integração com um serviço de estado.
-
-## **Requisitos Técnicos (avaliação)**
-
-- **Arquitetura de Services**
-  - **`ProductService`**: Implementado em `src/app/service/product.service.ts`. Realiza chamadas HTTP: `getProducts`, `getProductById`, `createProduct`, `editProduct`, `deleteProduct`.
-  - **`CartService`**: Ausente — recomenda-se criar `src/app/service/cart.service.ts` para separar a lógica do carrinho do UI.
-
-- **Boas Práticas e Tipagem**
-  - **Interface `Product`**: Implementada em `src/app/models/product.model.ts` (bom uso de tipagem — evita `any`).
-  - **Código**: Organização razoável e uso de sinais (`signal`) em alguns componentes; falta de validações nos forms e lógica de carrinho no service.
-
-## **Como Rodar (desenvolvimento)**
-
-- **Pré-requisitos**: Node.js + npm instalados; backend disponível em `http://localhost:8080` conforme end-point usado no `ProductService`.
-- **Instalar dependências**:
-```powershell
-cd c:\Users\kauan\Downloads\JAVA\loja
-npm install
-```
-- **Iniciar aplicação**:
-```powershell
-npm start
-# ou
-ng serve
-```
-- **Abrir no navegador**: `http://localhost:4200`
-
-## **Arquivos e pontos de interesse**
-
-- **ProductService**: `src/app/service/product.service.ts` — chamadas HTTP CRUD.
-- **Listagem de produtos**: `src/app/pages/product/list-product/list-product.ts` e `list-product.html` — tabela e ações.
-- **Modal de exclusão**: `src/app/components/modal/modal.ts` — confirma exclusão e invoca `ProductService.deleteProduct()`.
-- **Formulário criar/editar**: `src/app/pages/product/create-edit-product/create-edit-product.ts` — FormGroup/FormControl, sem validators.
-- **Componente de cartão**: `src/app/components/product-card/product-card.ts` — `onAddToCart()` precisa de implementação.
-- **Página do carrinho**: `src/app/pages/cart/cart.ts` — arquivo presente, sem lógica.
-- **Header**: `src/app/components/header/header.ts` — sem contador do carrinho.
-
-## **Recomendações / Próximos Passos (priorizados)**
-
-1. **Criar `CartService`** (`src/app/service/cart.service.ts`):
-   - Métodos: `addItem(product: Product)`, `removeItem(productId: number)`, `getItems()`, `getTotal()`, `saveToStorage()`, `loadFromStorage()`.
-   - Persistir em `localStorage` e usar um `BehaviorSubject`/`signal` para emitir mudanças para componentes (header, cart page).
-
-2. **Implementar `onAddToCart()` em `ProductCard`** para usar `CartService.addItem()` e atualizar contador no `Header`.
-
-3. **Extrair componente de Tabela** (opcional, mas conforme requisito):
-   - Criar `src/app/components/product-table/product-table.ts` que receba `@Input() products: Product[]` e `@Output()` para eventos (edit, delete, add-to-cart).
-
-4. **Adicionar validações no formulário** (`Validators.required`, `Validators.min`, `Validators.pattern`) em `create-edit-product.ts` e mostrar mensagens de erro no template.
-
-5. **Implementar página do Carrinho** (`cart.ts` / `cart.html`): listar itens, permitir remover, ajustar quantidade, e mostrar total dinâmico.
-
-6. **Testes e lint**: adicionar testes unitários para `ProductService` e `CartService`, e checar console para warnings/erros.
-
-## **Observações**
-
-- O backend esperado deve aceitar os formatos definidos em `src/app/models/product.model.ts` (veja `CreateProduct` e `ProdutoRequest`).
-- Alguns componentes importam Material/PrimeNG; confirme configurações de módulo caso surjam erros de provider/import.
+- **Descrição**: Projeto front-end em Angular para uma loja virtual simples com **CRUD de produtos** e **carrinho de compras**.
+- **Tecnologias**: **Angular 17** (com Signals), **TypeScript**, **Tailwind CSS** (para estilização), Angular Material (componentes), PrimeNG (opcional).
+- **Backend esperado**: API REST em `http://localhost:8080/v1/produtos` (Endpoints CRUD para Produtos).
 
 ---
-Se quiser, eu posso:
-- Implementar o `CartService` e integrar o `product-card` e `header` para o contador; ou
-- Extrair a tabela para um componente isolado com `@Input()`/`@Output()`; ou
-- Adicionar validações ao formulário de criação/edição.
 
-Indique qual ação deseja que eu faça a seguir.
-# Loja
+## **Requisitos Funcionais (Mapeamento e Status)**
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+### **Módulo de Produtos (CRUD)**
 
-## Development server
+| Funcionalidade                         | Status            | Pontos de Atenção / Detalhes                                                                                                                     |
+| :------------------------------------- | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Listagem**                           | **Implementado**  | Carga via `ProductService.getProducts()`. Componente: `src/app/pages/product/list-product/list-product.ts`.                                      |
+| **Componente de Tabela Isolado**       | **A Implementar** | **Prioridade (Recomendação #3):** Criar `app-product-table` para desacoplar a lógica da tabela da listagem principal.                            |
+| **Colunas / Formatação**               | **Implementado**  | Colunas obrigatórias: Nome / Preço / Cód. Barras. Preço formatado com `CurrencyPipe`.                                                            |
+| **Ações (Editar/Excluir)**             | **Implementado**  | Edição navega para rota. Exclusão via modal (`src/app/components/modal/modal.ts`) que chama `ProductService.deleteProduct()` e atualiza a lista. |
+| **Adicionar ao Carrinho na Listagem**  | **Parcial**       | O método `onAddToCart()` em `product-card` existe, mas precisa integrar-se ao novo **`CartService`**.                                            |
+| **Cadastro / Edição (Reactive Forms)** | **Parcial**       | Falta de **validações (Validators)** obrigatórias (Requisito #4: Adicionar `Validators.required`, `Validators.min`, etc.).                       |
 
-To start a local development server, run:
+### **Módulo de Carrinho de Compras**
 
-```bash
-ng serve
-```
+| Funcionalidade                            | Status               | Pontos de Atenção / Detalhes                                                                                                             |
+| :---------------------------------------- | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lógica de Estado (CartService)**        | **A Implementar**    | **Prioridade (Recomendação #1):** Criar `src/app/service/cart.service.ts` para gerenciar a lógica do carrinho.                           |
+| **Persistência (LocalStorage)**           | **A Implementar**    | **Prioridade (Recomendação #1):** O `CartService` deve implementar a lógica para **salvar e carregar** o carrinho do **`LocalStorage`**. |
+| **Prevenção de Duplicidade / Quantidade** | **A Implementar**    | O `CartService` deve gerenciar a lógica de incrementar a quantidade de um item existente.                                                |
+| **Página do Carrinho**                    | **Estrutura Pronta** | **Prioridade (Recomendação #5):** `src/app/pages/cart/cart.ts` sem listagem, total ou lógica de remoção de itens.                        |
+| **Header/Menu com Contador**              | **A Implementar**    | O `header.ts` precisa se inscrever no `CartService` (via `signal`/`BehaviorSubject`) para exibir o número de itens.                      |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## **Requisitos Técnicos (Avaliação e Arquitetura)**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### **Arquitetura de Services**
 
-```bash
-ng generate component component-name
-```
+- **`ProductService`**: Implementado e seguindo as boas práticas com chamadas HTTP para o CRUD.
+- **`CartService`**: **Ausente/Prioritário.** Necessária a criação de `src/app/service/cart.service.ts` para isolar toda a lógica de estado do carrinho (adição, remoção, total e persistência).
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### **Boas Práticas e Tipagem**
 
-```bash
-ng generate --help
-```
+- **Interface `Product`**: Implementada em `src/app/models/product.model.ts` (Excelente uso de tipagem, evitando `any`).
+- **Padrão de Estado**: Uso de **Angular Signals** já em alguns componentes (bom para Angular 17), mas precisa ser aplicado no **`CartService`** para um gerenciamento de estado reativo e eficiente.
+- **Estilização**: Uso de **Tailwind CSS** (confirme a configuração no `angular.json` ou `tailwind.config.js`).
 
-## Building
+---
 
-To build the project run:
+## **Como Rodar (Desenvolvimento)**
 
-```bash
-ng build
-```
+### **Pré-requisitos**
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Node.js + npm instalados.
+- Backend REST API disponível (Ex: `http://localhost:8080`).
+- **Angular CLI 17+**.
 
-## Running unit tests
+### **Comandos de Execução**
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+1.  **Instalar dependências**:
 
-```bash
-ng test
-```
+    ```powershell
+    cd <caminho_do_projeto>
+    npm install
+    ```
 
-## Running end-to-end tests
+2.  **Iniciar aplicação**:
 
-For end-to-end (e2e) testing, run:
+    ```powershell
+    npm start
+    # ou
+    ng serve
+    ```
 
-```bash
-ng e2e
-```
+3.  **Abrir no navegador**: `http://localhost:4200`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## **Recomendações / Próximos Passos (Priorizados para o e-commerce)**
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1.  ### 🛒 **Implementar `CartService` com LocalStorage**
+
+    - Criar o `CartService` (`src/app/service/cart.service.ts`).
+    - Definir um **`signal`** ou **`BehaviorSubject`** para o estado do carrinho.
+    - Implementar métodos: `addItem()`, `removeItem()`, `getItems()`, `getTotal()`, e especialmente, **`saveToStorage()`** e **`loadFromStorage()`** (para persistência no _`LocalStorage`_).
+
+2.  ### 🔗 **Integrar Adição ao Carrinho**
+
+    - Corrigir o `onAddToCart()` em `ProductCard` para chamar o novo **`CartService.addItem()`**.
+    - No **Header**, subscrever o _signal_ do carrinho para atualizar o contador de itens em tempo real.
+
+3.  ### ✅ **Adicionar Validações no Formulário**
+
+    - Em `create-edit-product.ts`, aplicar **`Validators.required`** e validações numéricas (ex: `Validators.min(0.01)`) para Nome, Preço e Cód. Barras.
+
+4.  ### 📝 **Implementar Página do Carrinho**
+
+    - Em `cart.ts` / `cart.html`, exibir os itens do carrinho (usando o _signal_ do `CartService`), permitir remoção de itens e ajuste de quantidade, e exibir o valor total dinâmico.
+
+5.  **Extrair Tabela de Produtos** (Opcional, mas boa prática): Criar um componente isolado (`app-product-table`) para maior reutilização e clareza.
+
+---
+
+## **Comandos Úteis do Angular CLI**
+
+- **Gerar novo componente**: `ng generate component components/novo-componente`
+- **Gerar novo Service**: `ng generate service service/novo-service`
+- **Build de Produção**: `ng build` (artefatos em `dist/`)
+- **Executar testes unitários (Vitest)**: `ng test`
